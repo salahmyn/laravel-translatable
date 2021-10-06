@@ -33,13 +33,13 @@ trait Translatable
     {
         static::saved(function (Model $model) {
             /* @var Translatable $model */
-            return $model->saveTranslations();
+            $model->saveTranslations();
         });
 
         static::deleting(function (Model $model) {
             /* @var Translatable $model */
             if (self::$deleteTranslationsCascade === true) {
-                return $model->deleteTranslations();
+                $model->deleteTranslations();
             }
         });
     }
