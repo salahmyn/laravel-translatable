@@ -768,7 +768,8 @@ final class TranslatableTest extends TestCase
         $this->app->make('config')->set('translatable.fallback_locale', 'de');
         $this->app->make('config')->set('translatable.use_fallback', true);
 
-        $vegetable = new class extends Vegetable {
+        $vegetable = new class extends Vegetable
+        {
             protected $table = 'vegetables';
             public $translationModel = VegetableTranslation::class;
 
@@ -803,7 +804,10 @@ final class TranslatableTest extends TestCase
         $this->app->make('config')->set('translatable.use_fallback', true);
         $this->app->setLocale('en');
 
-        $peas = factory(Vegetable::class)->create(['name:en' => 'Peas']);
+        $peas = factory(Vegetable::class)->create([
+            'name:en' => 'Peas',
+            'name:fr' => 'Pois',
+        ]);
 
         static::assertInstanceOf(VegetableTranslation::class, $peas->translation);
         static::assertEquals('en', $peas->translation->locale);
@@ -818,6 +822,7 @@ final class TranslatableTest extends TestCase
 
         $peas = factory(Vegetable::class)->create(['name:fr' => 'Pois']);
 
+        static::assertInstanceOf(VegetableTranslation::class, $peas->translation);
         static::assertEquals('fr', $peas->translation->locale);
     }
 
